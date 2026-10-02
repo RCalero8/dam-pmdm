@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Generador visual de tablas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    #tabla td[contenteditable] { min-width: 90px; }
+    #tabla td[contenteditable]:focus { outline: 2px solid #0d6efd; background: #f0f6ff; }
+    .ctrl-cell, .ctrl-row th { width: 1%; background: #f8f9fa; text-align: center; vertical-align: middle; }
+  </style>
+</head>
+<body class="bg-body-tertiary">
+  <div class="container py-4">
+    <h1 class="h3 mb-4">Generador visual de tablas</h1>
+
+    <div class="d-flex flex-wrap gap-2 mb-3">
+      <button id="btnAddFila" class="btn btn-success">+ Añadir fila</button>
+      <button id="btnAddCol" class="btn btn-success">+ Añadir columna</button>
+      <button id="btnEliminarTabla" class="btn btn-danger ms-md-auto">Eliminar tabla completa</button>
+    </div>
+
+    <p class="text-muted small">Haz clic en una celda para escribir. Usa los botones ✕ para borrar filas o columnas.</p>
+
+    <div id="contenedorTabla" class="table-responsive bg-white shadow-sm">
+      <!-- La tabla se inicia con 3 filas y 3 columnas -->
+      <table id="tabla" class="table table-bordered align-middle mb-0">
+        <tr class="ctrl-row">
+          <th></th>
+          <th><button class="btn btn-sm btn-outline-danger btn-del-col" title="Eliminar columna">✕</button></th>
+          <th><button class="btn btn-sm btn-outline-danger btn-del-col" title="Eliminar columna">✕</button></th>
+          <th><button class="btn btn-sm btn-outline-danger btn-del-col" title="Eliminar columna">✕</button></th>
+        </tr>
+        <tr>
+          <td class="ctrl-cell"><button class="btn btn-sm btn-outline-danger btn-del-fila" title="Eliminar fila">✕</button></td>
+          <td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+        </tr>
+        <tr>
+          <td class="ctrl-cell"><button class="btn btn-sm btn-outline-danger btn-del-fila" title="Eliminar fila">✕</button></td>
+          <td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+        </tr>
+        <tr>
+          <td class="ctrl-cell"><button class="btn btn-sm btn-outline-danger btn-del-fila" title="Eliminar fila">✕</button></td>
+          <td contenteditable="true"></td><td contenteditable="true"></td><td contenteditable="true"></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Se muestra cuando no hay tabla -->
+    <div id="sinTabla" class="text-center py-5 d-none">
+      <p class="text-muted">No hay ninguna tabla.</p>
+      <button id="btnNuevaTabla" class="btn btn-primary">Crear tabla nueva</button>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
