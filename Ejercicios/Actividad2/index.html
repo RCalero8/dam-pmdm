@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contador de texto</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+  <main class="container py-5" style="max-width: 860px;">
+    <h1 class="h3 mb-1">Contador de texto</h1>
+    <p class="text-secondary mb-4">Escribe o pega un texto y los números se actualizan al instante.</p>
+
+    <!-- Estadísticas -->
+    <div class="row g-3 mb-4">
+      <div class="col-6 col-md-3">
+        <div class="card text-center h-100">
+          <div class="card-body">
+            <div id="caracteres" class="display-6 fw-semibold">0</div>
+            <div class="text-secondary small">Caracteres</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card text-center h-100">
+          <div class="card-body">
+            <div id="sinEspacios" class="display-6 fw-semibold">0</div>
+            <div class="text-secondary small">Sin espacios</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card text-center h-100">
+          <div class="card-body">
+            <div id="palabras" class="display-6 fw-semibold">0</div>
+            <div class="text-secondary small">Palabras</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3">
+        <div class="card text-center h-100">
+          <div class="card-body">
+            <div id="parrafos" class="display-6 fw-semibold">0</div>
+            <div class="text-secondary small">Párrafos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Área de texto -->
+    <label for="texto" class="form-label fw-semibold">Tu texto</label>
+    <textarea id="texto" class="form-control mb-3" rows="12"
+              placeholder="Empieza a escribir aquí..."></textarea>
+
+    <button id="limpiar" type="button" class="btn btn-outline-secondary">Borrar texto</button>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
