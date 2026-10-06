@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cifrador Cesar - Basico</title>
+</head>
+
+<body class="bg-light">
+    <div class="container py-5" style="max-width: 720px;">
+        <h1 class="text-center mb-4">Cifrado Cesar (desplazamiento 3)</h1>
+
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <div class="mb-3">
+                    <label for="texto">Texto a cifrar</label>
+                    <textarea name="texto" id="texto" placeholder="Escribe aqui...."></textarea>
+                </div>
+                <div class="mb-3">
+                    <button id="btnCifrar">Cifrar</button>
+                </div>
+                <div class="mb-3">
+                    <label for="resultado">Resultado</label>
+                    <textarea readonly id="resultado"></textarea>
+                </div>
+            </div>
+        </div>
+       
+    </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
