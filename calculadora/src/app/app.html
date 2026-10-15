@@ -1,0 +1,29 @@
+<div class="container mt-5" style="max-width: 300px;">
+  <div class="card p-3 shadow">
+    <!--Pantalla-->
+    <div class="form-control text-end fs-3 mb-3">{{pantalla}}</div>
+
+    <!--Botones-->
+    <div class="row g-2">
+      <div class="col-4"><button class="btn btn-secondary w-100" (click)="digito(7)">7</button></div>
+      <div class="col-4"><button class="btn btn-secondary w-100" (click)="digito(8)">8</button></div>
+      <div class="col-4"><button class="btn btn-secondary w-100" (click)="digito(9)">9</button></div>
+      
+      <div class="col-4"><button class="btn btn-secondary w-100" (click)="digito(4)">4</button></div>
+      <div class="col-4"><button class="btn btn-secondary w-100" (click)="digito(5)">5</button></div>
+      <div class="col-4"><button class="btn btn-secondary w-100" (click)="digito(6)">6</button></div>
+      
+      <div class="col-4"><button class="btn btn-secondary w-100" (click)="digito(1)">1</button></div>
+      <div class="col-4"><button class="btn btn-secondary w-100" (click)="digito(2)">2</button></div>
+      <div class="col-4"><button class="btn btn-secondary w-100" (click)="digito(3)">3</button></div>
+      
+      <div class="col-4"><button class="btn btn-secondary w-100" (click)="digito(0)">0</button></div>
+      <div class="col-4"><button class="btn btn-secondary w-100" (click)="suma()">+</button></div>
+      <div class="col-4"><button class="btn btn-secondary w-100" (click)="resta()">-</button></div>
+
+      <div class="col-12">
+        <button class="btn btn-success w-100" [disabled]="operador === ''" (click)="igual()">=</button>
+      </div>
+    </div>
+  </div>
+</div>
