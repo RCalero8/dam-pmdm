@@ -1,0 +1,12 @@
+<div class="container-fluid mt-5">
+    <div class="row">
+        @for (item of pokemonList; track item.id) {
+            <div class="col-md-3 col-12">
+                <app-pokemon-items [pokemon]="item"></app-pokemon-items>
+            </div>
+        } @empty {
+            <div class="col-12 text-center">
+                <p>No Pokémon found.</p>
+            </div>
+        }
+    </div>
