@@ -1,0 +1,17 @@
+<div class="progress" [style.height.px]="height()">
+  <div
+    class="progress-bar"
+    [class]="'bg-' + color()"
+    [class.progress-bar-striped]="striped()"
+    [class.progress-bar-animated]="animated()"
+    role="progressbar"
+    [style.width.%]="safeValue()"
+    [attr.aria-valuenow]="safeValue()"
+    aria-valuemin="0"
+    aria-valuemax="100"
+  >
+    @if (showText()) {
+      {{ safeValue() }}%
+    }
+  </div>
+</div>
