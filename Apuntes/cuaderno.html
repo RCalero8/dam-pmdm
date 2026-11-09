@@ -10,7 +10,7 @@
 
   <header class="portada">
     <h1>📕 Apuntes de Angular</h1>
-    <p>Resumen: HTTP · Routing · Validadores · Reactive forms · Formularios · Outputs · Plantillas · Signals</p>
+    <p>Resumen: Outputs · Formularios · RouterLink · Query params · Routing · HTTP · Plantillas · Signals · Reactive forms · Validadores</p>
   </header>
 
   <div class="contenedor">
@@ -18,22 +18,105 @@
     <nav class="indice">
       <h2>Índice</h2>
       <ol>
-        <li><a href="#http">HTTP</a></li>
-        <li><a href="#query-params">Query params y ruta activa</a></li>
-        <li><a href="#routerlink">RouterLink y Router</a></li>
-        <li><a href="#routing">Routing</a></li>
-        <li><a href="#validacion">Validadores</a></li>
-        <li><a href="#reactive">Reactive forms</a></li>
-        <li><a href="#formularios">Formularios template-driven</a></li>
         <li><a href="#outputs">Outputs</a></li>
+        <li><a href="#formularios">Formularios template-driven</a></li>
+        <li><a href="#routerlink">RouterLink y Router</a></li>
+        <li><a href="#query-params">Query params y ruta activa</a></li>
+        <li><a href="#routing">Routing</a></li>
+        <li><a href="#http">HTTP</a></li>
         <li><a href="#plantillas">Plantillas y binding</a></li>
         <li><a href="#signals">Signals</a></li>
+        <li><a href="#reactive">Reactive forms</a></li>
+        <li><a href="#validacion">Validadores</a></li>
       </ol>
     </nav>
 
     <main class="hojas">
+      <section class="hoja" id="outputs">
+        <h2>1. Outputs</h2>
+        <p class="fuente"><a href="https://angular.dev/guide/components/outputs">Fuente</a></p>
+        <p>Eventos personalizados del componente hijo hacia el padre.</p>
+<pre><code>// Hijo
+panelClosed = output&lt;void&gt;();
+valueChanged = output&lt;number&gt;();
+this.valueChanged.emit(7);
+
+// Padre
+&lt;custom-slider (valueChanged)="log($event)" /&gt;</code></pre>
+        <ul>
+          <li>No burbujean por el DOM y distinguen mayúsculas.</li>
+          <li>Solo se declaran en inicializadores de propiedades.</li>
+          <li>Nombres en camelCase, sin prefijo <code>on</code> y sin chocar con eventos del DOM.</li>
+          <li>Forma antigua (sigue válida): <code>@Output() x = new EventEmitter()</code>.</li>
+        </ul>
+      </section>
+
+      <section class="hoja" id="formularios">
+        <h2>2. Formularios template-driven</h2>
+        <p class="fuente"><a href="https://angular.dev/guide/forms#setup-in-template-driven-forms">Fuente</a></p>
+        <p>El modelo es <strong>implícito</strong>: <code>NgModel</code> crea el <code>FormControl</code>. La fuente de verdad es la plantilla.</p>
+<pre><code>@Component({
+  template: `&lt;input [(ngModel)]="favoriteColor" /&gt;`,
+  imports: [FormsModule],
+})
+export class Color { favoriteColor = signal(''); }</code></pre>
+        <table>
+          <thead><tr><th></th><th>Reactive</th><th>Template-driven</th></tr></thead>
+          <tbody>
+            <tr><td>Modelo</td><td>Explícito, en la clase</td><td>Implícito, por directivas</td></tr>
+            <tr><td>Datos</td><td>Inmutables</td><td>Mutables</td></tr>
+            <tr><td>Flujo</td><td>Síncrono</td><td>Asíncrono</td></tr>
+            <tr><td>Validación</td><td>Funciones</td><td>Directivas</td></tr>
+          </tbody>
+        </table>
+        <div class="resumen">Template-driven para formularios simples; reactive para los que escalan.</div>
+      </section>
+
+      <section class="hoja" id="routerlink">
+        <h2>3. RouterLink y Router</h2>
+        <p class="fuente"><a href="https://angular.dev/guide/routing/navigate-to-routes#how-to-use-routerlink">Fuente</a></p>
+<pre><code>&lt;a routerLink="/settings"&gt;Settings&lt;/a&gt;           &lt;!-- absoluta --&gt;
+&lt;a routerLink="notifications"&gt;Notif.&lt;/a&gt;          &lt;!-- relativa --&gt;
+&lt;a [routerLink]="['user', id]"&gt;Usuario&lt;/a&gt;         &lt;!-- con parámetro --&gt;
+
+this.router.navigate(['/search'], {queryParams: {sort: 'price'}});
+this.router.navigate(['edit'], {relativeTo: this.route});
+this.router.navigateByUrl('/products/123?view=details');</code></pre>
+        <div class="ojo">Con <code>relativeTo</code> no empieces con <code>/</code> (pasa a absoluta). Los <code>..</code> van todos en el primer elemento: <code>['../../settings']</code>.</div>
+      </section>
+
+      <section class="hoja" id="query-params">
+        <h2>4. Query params y ruta activa</h2>
+        <p class="fuente"><a href="https://angular.dev/guide/routing/read-route-state#query-parameters">Fuente</a></p>
+        <ul>
+          <li><strong>Parámetros de ruta</strong> (<code>product/:id</code>): <code>route.params</code>.</li>
+          <li><strong>Query params</strong> (<code>?sort=price</code>): opcionales, persisten entre navegaciones; ideales para filtros, orden y paginación.</li>
+          <li><strong>Snapshot</strong>: foto estática de la ruta; no refleja cambios posteriores.</li>
+        </ul>
+<pre><code>this.route.queryParams.subscribe(p =&gt; {
+  const sort = p['sort'] || 'price';
+});
+
+this.router.navigate([], {
+  queryParams: {sort},
+  queryParamsHandling: 'merge',   // conserva los demás
+});</code></pre>
+        <p><code>routerLinkActive="active"</code> marca el enlace activo; añade <code>[routerLinkActiveOptions]="{exact: true}"</code> para coincidencia exacta y <code>ariaCurrentWhenActive="page"</code> por accesibilidad. <code>isActive()</code> devuelve un signal.</p>
+      </section>
+
+      <section class="hoja" id="routing">
+        <h2>5. Routing</h2>
+        <p class="fuente"><a href="https://angular.dev/guide/routing">Fuente</a></p>
+        <p>En una SPA solo se carga <code>index.html</code>; el router del cliente cambia el contenido según la URL sin recargar.</p>
+        <ul>
+          <li><strong>Routes</strong>: qué componente va con cada URL.</li>
+          <li><strong>Outlets</strong>: dónde se pinta el componente activo.</li>
+          <li><strong>Links</strong>: navegar sin recargar.</li>
+        </ul>
+      </section>
+
       <section class="hoja" id="http">
-        <h2>1. HTTP</h2>
+        <h2>6. HTTP</h2>
         <p class="fuente"><a href="https://angular.dev/guide/http/making-requests#best-practices">Fuente</a></p>
         <p><strong>Buena práctica:</strong> encapsular <code>HttpClient</code> en servicios inyectables, no usarlo directo en los componentes.</p>
 <pre><code>export class UserService {
@@ -53,51 +136,73 @@
         </ul>
       </section>
 
-      <section class="hoja" id="query-params">
-        <h2>2. Query params y ruta activa</h2>
-        <p class="fuente"><a href="https://angular.dev/guide/routing/read-route-state#query-parameters">Fuente</a></p>
-        <ul>
-          <li><strong>Parámetros de ruta</strong> (<code>product/:id</code>): <code>route.params</code>.</li>
-          <li><strong>Query params</strong> (<code>?sort=price</code>): opcionales, persisten entre navegaciones; ideales para filtros, orden y paginación.</li>
-          <li><strong>Snapshot</strong>: foto estática de la ruta; no refleja cambios posteriores.</li>
-        </ul>
-<pre><code>this.route.queryParams.subscribe(p =&gt; {
-  const sort = p['sort'] || 'price';
+      <section class="hoja" id="plantillas">
+        <h2>7. Plantillas y binding</h2>
+        <p class="fuente"><a href="https://v20.angular.dev/essentials/templates">Plantillas</a> · <a href="https://v20.angular.dev/guide/templates/binding">Binding</a></p>
+        <table>
+          <thead><tr><th>Sintaxis</th><th>Uso</th></tr></thead>
+          <tbody>
+            <tr><td><code>{{ theme() }}</code></td><td>Texto dinámico</td></tr>
+            <tr><td><code>[disabled]="x()"</code></td><td>Propiedad del DOM o input de componente</td></tr>
+            <tr><td><code>[attr.role]="x()"</code></td><td>Atributo HTML (<code>null</code> lo elimina)</td></tr>
+            <tr><td><code>[class.open]="x()"</code></td><td>Clase condicional</td></tr>
+            <tr><td><code>[style.height.px]="x()"</code></td><td>Estilo con unidad</td></tr>
+            <tr><td><code>(click)="fn($event)"</code></td><td>Evento</td></tr>
+            <tr><td><code>@if</code> / <code>@for</code></td><td>Condicionales y bucles</td></tr>
+          </tbody>
+        </table>
+<pre><code>@if (isAdmin()) { &lt;h2&gt;Admin&lt;/h2&gt; } @else { &lt;h2&gt;User&lt;/h2&gt; }
+
+@for (b of badges(); track b.id) { &lt;li&gt;{{ b.name }}&lt;/li&gt; }</code></pre>
+        <div class="ojo">Lo que cambia con el tiempo debe leerse desde un signal. En <code>[class]</code> y <code>[style]</code> con arrays u objetos hay que crear una instancia nueva para que Angular detecte el cambio. <code>track</code> es obligatorio en <code>@for</code>.</div>
+      </section>
+
+      <section class="hoja" id="signals">
+        <h2>8. Signals</h2>
+        <p class="fuente"><a href="https://v20.angular.dev/essentials/signals">Fuente</a></p>
+        <p>Un <strong>signal</strong> envuelve un valor y permite a Angular saber dónde se lee y cuándo cambia (reactividad).</p>
+<pre><code>const name = signal('Morgan');
+name();                              // leer
+name.set('Jaime');                   // cambiar
+name.update(n =&gt; n.toUpperCase());   // cambiar según el anterior
+
+const upper = computed(() =&gt; name().toUpperCase()); // derivado, solo lectura</code></pre>
+        <div class="resumen"><code>signal()</code> guarda estado, <code>computed()</code> lo deriva, se lee con <code>()</code>.</div>
+      </section>
+
+      <section class="hoja" id="reactive">
+        <h2>9. Reactive forms</h2>
+        <p class="fuente"><a href="https://angular.dev/guide/forms/reactive-forms">Fuente</a></p>
+        <p>El modelo se define <strong>en la clase</strong> y es la fuente de verdad. Importa <code>ReactiveFormsModule</code>.</p>
+        <table>
+          <thead><tr><th>Clase</th><th>Función</th></tr></thead>
+          <tbody>
+            <tr><td><code>FormControl</code></td><td>Un campo: <code>new FormControl('')</code> con <code>[formControl]</code></td></tr>
+            <tr><td><code>FormGroup</code></td><td>Grupo con nombre: <code>[formGroup]</code> y <code>formControlName</code>; anidado con <code>formGroupName</code></td></tr>
+            <tr><td><code>FormArray</code></td><td>Colección dinámica sin nombre: <code>formArrayName</code>, <code>.push()</code></td></tr>
+            <tr><td><code>FormBuilder</code></td><td>Atajo: <code>fb.group({firstName: ['', Validators.required]})</code></td></tr>
+          </tbody>
+        </table>
+<pre><code>profileForm = new FormGroup({
+  firstName: new FormControl('', Validators.required),
+  address: new FormGroup({ city: new FormControl('') }),
 });
 
-this.router.navigate([], {
-  queryParams: {sort},
-  queryParamsHandling: 'merge',   // conserva los demás
-});</code></pre>
-        <p><code>routerLinkActive="active"</code> marca el enlace activo; añade <code>[routerLinkActiveOptions]="{exact: true}"</code> para coincidencia exacta y <code>ariaCurrentWhenActive="page"</code> por accesibilidad. <code>isActive()</code> devuelve un signal.</p>
-      </section>
-
-      <section class="hoja" id="routerlink">
-        <h2>3. RouterLink y Router</h2>
-        <p class="fuente"><a href="https://angular.dev/guide/routing/navigate-to-routes#how-to-use-routerlink">Fuente</a></p>
-<pre><code>&lt;a routerLink="/settings"&gt;Settings&lt;/a&gt;           &lt;!-- absoluta --&gt;
-&lt;a routerLink="notifications"&gt;Notif.&lt;/a&gt;          &lt;!-- relativa --&gt;
-&lt;a [routerLink]="['user', id]"&gt;Usuario&lt;/a&gt;         &lt;!-- con parámetro --&gt;
-
-this.router.navigate(['/search'], {queryParams: {sort: 'price'}});
-this.router.navigate(['edit'], {relativeTo: this.route});
-this.router.navigateByUrl('/products/123?view=details');</code></pre>
-        <div class="ojo">Con <code>relativeTo</code> no empieces con <code>/</code> (pasa a absoluta). Los <code>..</code> van todos en el primer elemento: <code>['../../settings']</code>.</div>
-      </section>
-
-      <section class="hoja" id="routing">
-        <h2>4. Routing</h2>
-        <p class="fuente"><a href="https://angular.dev/guide/routing">Fuente</a></p>
-        <p>En una SPA solo se carga <code>index.html</code>; el router del cliente cambia el contenido según la URL sin recargar.</p>
+&lt;form [formGroup]="profileForm"&gt;
+  &lt;input formControlName="firstName" /&gt;
+  &lt;div formGroupName="address"&gt;&lt;input formControlName="city" /&gt;&lt;/div&gt;
+&lt;/form&gt;</code></pre>
         <ul>
-          <li><strong>Routes</strong>: qué componente va con cada URL.</li>
-          <li><strong>Outlets</strong>: dónde se pinta el componente activo.</li>
-          <li><strong>Links</strong>: navegar sin recargar.</li>
+          <li><code>setValue()</code> reemplaza todo y exige la estructura exacta; <code>patchValue()</code> actualiza solo lo indicado.</li>
+          <li><code>valueChanges</code> emite cada cambio; <code>status</code>: VALID, INVALID, PENDING o DISABLED (un grupo inválido invalida a su padre).</li>
+          <li>Estados <code>touched</code>/<code>dirty</code> se actualizan solos; también con <code>markAsTouched()</code>, <code>markAllAsDirty()</code>...</li>
+          <li><code>{emitEvent: false}</code> evita emitir eventos; <code>{onlySelf: true}</code> no notifica al padre.</li>
         </ul>
+        <div class="resumen">Reactive = modelo explícito en la clase, <code>FormControl</code>/<code>FormGroup</code>/<code>FormArray</code>, validación con funciones.</div>
       </section>
 
       <section class="hoja" id="validacion">
-        <h2>5. Validadores</h2>
+        <h2>10. Validadores</h2>
         <p class="fuente"><a href="https://angular.dev/guide/forms/form-validation#built-in-validator-functions">Incorporados</a> · <a href="https://angular.dev/guide/forms/form-validation#defining-custom-validators">Personalizados</a></p>
 
         <h3>Incorporados</h3>
@@ -139,111 +244,6 @@ export class ForbiddenValidatorDirective implements Validator {
   }
 }</code></pre>
         <div class="ojo">Usa <code>useExisting</code>, no <code>useClass</code>: el validador debe ser <em>esa instancia</em>, la que tiene el valor enlazado. Los validadores asíncronos devuelven Promise u Observable que emita <code>null</code> o error; el Observable debe completarse (<code>first</code>, <code>take</code>...).</div>
-      </section>
-
-      <section class="hoja" id="reactive">
-        <h2>6. Reactive forms</h2>
-        <p class="fuente"><a href="https://angular.dev/guide/forms/reactive-forms">Fuente</a></p>
-        <p>El modelo se define <strong>en la clase</strong> y es la fuente de verdad. Importa <code>ReactiveFormsModule</code>.</p>
-        <table>
-          <thead><tr><th>Clase</th><th>Función</th></tr></thead>
-          <tbody>
-            <tr><td><code>FormControl</code></td><td>Un campo: <code>new FormControl('')</code> con <code>[formControl]</code></td></tr>
-            <tr><td><code>FormGroup</code></td><td>Grupo con nombre: <code>[formGroup]</code> y <code>formControlName</code>; anidado con <code>formGroupName</code></td></tr>
-            <tr><td><code>FormArray</code></td><td>Colección dinámica sin nombre: <code>formArrayName</code>, <code>.push()</code></td></tr>
-            <tr><td><code>FormBuilder</code></td><td>Atajo: <code>fb.group({firstName: ['', Validators.required]})</code></td></tr>
-          </tbody>
-        </table>
-<pre><code>profileForm = new FormGroup({
-  firstName: new FormControl('', Validators.required),
-  address: new FormGroup({ city: new FormControl('') }),
-});
-
-&lt;form [formGroup]="profileForm"&gt;
-  &lt;input formControlName="firstName" /&gt;
-  &lt;div formGroupName="address"&gt;&lt;input formControlName="city" /&gt;&lt;/div&gt;
-&lt;/form&gt;</code></pre>
-        <ul>
-          <li><code>setValue()</code> reemplaza todo y exige la estructura exacta; <code>patchValue()</code> actualiza solo lo indicado.</li>
-          <li><code>valueChanges</code> emite cada cambio; <code>status</code>: VALID, INVALID, PENDING o DISABLED (un grupo inválido invalida a su padre).</li>
-          <li>Estados <code>touched</code>/<code>dirty</code> se actualizan solos; también con <code>markAsTouched()</code>, <code>markAllAsDirty()</code>...</li>
-          <li><code>{emitEvent: false}</code> evita emitir eventos; <code>{onlySelf: true}</code> no notifica al padre.</li>
-        </ul>
-        <div class="resumen">Reactive = modelo explícito en la clase, <code>FormControl</code>/<code>FormGroup</code>/<code>FormArray</code>, validación con funciones.</div>
-      </section>
-
-      <section class="hoja" id="formularios">
-        <h2>7. Formularios template-driven</h2>
-        <p class="fuente"><a href="https://angular.dev/guide/forms#setup-in-template-driven-forms">Fuente</a></p>
-        <p>El modelo es <strong>implícito</strong>: <code>NgModel</code> crea el <code>FormControl</code>. La fuente de verdad es la plantilla.</p>
-<pre><code>@Component({
-  template: `&lt;input [(ngModel)]="favoriteColor" /&gt;`,
-  imports: [FormsModule],
-})
-export class Color { favoriteColor = signal(''); }</code></pre>
-        <table>
-          <thead><tr><th></th><th>Reactive</th><th>Template-driven</th></tr></thead>
-          <tbody>
-            <tr><td>Modelo</td><td>Explícito, en la clase</td><td>Implícito, por directivas</td></tr>
-            <tr><td>Datos</td><td>Inmutables</td><td>Mutables</td></tr>
-            <tr><td>Flujo</td><td>Síncrono</td><td>Asíncrono</td></tr>
-            <tr><td>Validación</td><td>Funciones</td><td>Directivas</td></tr>
-          </tbody>
-        </table>
-        <div class="resumen">Template-driven para formularios simples; reactive para los que escalan.</div>
-      </section>
-
-      <section class="hoja" id="outputs">
-        <h2>8. Outputs</h2>
-        <p class="fuente"><a href="https://angular.dev/guide/components/outputs">Fuente</a></p>
-        <p>Eventos personalizados del componente hijo hacia el padre.</p>
-<pre><code>// Hijo
-panelClosed = output&lt;void&gt;();
-valueChanged = output&lt;number&gt;();
-this.valueChanged.emit(7);
-
-// Padre
-&lt;custom-slider (valueChanged)="log($event)" /&gt;</code></pre>
-        <ul>
-          <li>No burbujean por el DOM y distinguen mayúsculas.</li>
-          <li>Solo se declaran en inicializadores de propiedades.</li>
-          <li>Nombres en camelCase, sin prefijo <code>on</code> y sin chocar con eventos del DOM.</li>
-          <li>Forma antigua (sigue válida): <code>@Output() x = new EventEmitter()</code>.</li>
-        </ul>
-      </section>
-
-      <section class="hoja" id="plantillas">
-        <h2>9. Plantillas y binding</h2>
-        <p class="fuente"><a href="https://v20.angular.dev/essentials/templates">Plantillas</a> · <a href="https://v20.angular.dev/guide/templates/binding">Binding</a></p>
-        <table>
-          <thead><tr><th>Sintaxis</th><th>Uso</th></tr></thead>
-          <tbody>
-            <tr><td><code>{{ theme() }}</code></td><td>Texto dinámico</td></tr>
-            <tr><td><code>[disabled]="x()"</code></td><td>Propiedad del DOM o input de componente</td></tr>
-            <tr><td><code>[attr.role]="x()"</code></td><td>Atributo HTML (<code>null</code> lo elimina)</td></tr>
-            <tr><td><code>[class.open]="x()"</code></td><td>Clase condicional</td></tr>
-            <tr><td><code>[style.height.px]="x()"</code></td><td>Estilo con unidad</td></tr>
-            <tr><td><code>(click)="fn($event)"</code></td><td>Evento</td></tr>
-            <tr><td><code>@if</code> / <code>@for</code></td><td>Condicionales y bucles</td></tr>
-          </tbody>
-        </table>
-<pre><code>@if (isAdmin()) { &lt;h2&gt;Admin&lt;/h2&gt; } @else { &lt;h2&gt;User&lt;/h2&gt; }
-
-@for (b of badges(); track b.id) { &lt;li&gt;{{ b.name }}&lt;/li&gt; }</code></pre>
-        <div class="ojo">Lo que cambia con el tiempo debe leerse desde un signal. En <code>[class]</code> y <code>[style]</code> con arrays u objetos hay que crear una instancia nueva para que Angular detecte el cambio. <code>track</code> es obligatorio en <code>@for</code>.</div>
-      </section>
-
-      <section class="hoja" id="signals">
-        <h2>10. Signals</h2>
-        <p class="fuente"><a href="https://v20.angular.dev/essentials/signals">Fuente</a></p>
-        <p>Un <strong>signal</strong> envuelve un valor y permite a Angular saber dónde se lee y cuándo cambia (reactividad).</p>
-<pre><code>const name = signal('Morgan');
-name();                              // leer
-name.set('Jaime');                   // cambiar
-name.update(n =&gt; n.toUpperCase());   // cambiar según el anterior
-
-const upper = computed(() =&gt; name().toUpperCase()); // derivado, solo lectura</code></pre>
-        <div class="resumen"><code>signal()</code> guarda estado, <code>computed()</code> lo deriva, se lee con <code>()</code>.</div>
       </section>
     </main>
   </div>
