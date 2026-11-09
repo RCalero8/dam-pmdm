@@ -1,0 +1,275 @@
+/* ==========================================================
+   Cuaderno de apuntes de Angular — tonos rojos
+   ========================================================== */
+
+:root {
+  --rojo-900: #5c0a14;
+  --rojo-800: #7f1020;
+  --rojo-700: #a3162a;
+  --rojo-600: #c41e3a;
+  --rojo-500: #dc3a52;
+  --rojo-300: #f2a0ac;
+  --rojo-200: #f8cfd5;
+  --rojo-100: #fdeaed;
+  --papel: #fff8f6;
+  --papel-linea: #f3d9dd;
+  --tinta: #3a1218;
+  --tinta-suave: #7a4a52;
+  --codigo-fondo: #2b0b10;
+  --codigo-texto: #ffe3e7;
+  --sombra: 0 2px 10px rgba(92, 10, 20, 0.12);
+  --radio: 10px;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.65;
+  color: var(--tinta);
+  background: var(--rojo-100);
+}
+
+/* ---------- Cabecera ---------- */
+.portada {
+  background: linear-gradient(135deg, var(--rojo-900), var(--rojo-600));
+  color: #fff;
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+  border-bottom: 6px solid var(--rojo-800);
+}
+.portada h1 {
+  margin: 0 0 .4rem;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: .5px;
+}
+.portada p { margin: 0; color: var(--rojo-200); }
+
+/* ---------- Maquetación ---------- */
+.contenedor {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 1.5rem;
+  max-width: 1180px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+/* ---------- Índice lateral ---------- */
+.indice {
+  position: sticky;
+  top: 1rem;
+  align-self: start;
+  background: var(--papel);
+  border: 1px solid var(--rojo-300);
+  border-left: 6px solid var(--rojo-700);
+  border-radius: var(--radio);
+  padding: 1rem 1.1rem;
+  box-shadow: var(--sombra);
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+}
+.indice h2 {
+  margin: 0 0 .6rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--rojo-700);
+}
+.indice ol { margin: 0; padding-left: 1.2rem; }
+.indice li { margin: .35rem 0; }
+.indice a {
+  color: var(--tinta);
+  text-decoration: none;
+  font-size: .93rem;
+}
+.indice a:hover { color: var(--rojo-600); text-decoration: underline; }
+
+/* ---------- Hoja de cuaderno ---------- */
+.hojas { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.hoja {
+  position: relative;
+  background-color: var(--papel);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 31px,
+    var(--papel-linea) 31px,
+    var(--papel-linea) 32px
+  );
+  border: 1px solid var(--rojo-300);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  padding: 1.6rem 1.6rem 1.6rem 4rem;
+}
+/* Margen rojo del cuaderno */
+.hoja::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2.8rem;
+  width: 2px;
+  background: var(--rojo-500);
+  opacity: .65;
+}
+/* Agujeros de la encuadernación */
+.hoja::after {
+  content: "";
+  position: absolute;
+  left: .9rem;
+  top: 1.2rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--rojo-100);
+  border: 1px solid var(--rojo-300);
+  box-shadow: 0 5rem 0 var(--rojo-100), 0 10rem 0 var(--rojo-100);
+}
+
+.hoja h2 {
+  margin: 0 0 .3rem;
+  color: var(--rojo-800);
+  font-size: 1.6rem;
+  border-bottom: 3px solid var(--rojo-600);
+  padding-bottom: .3rem;
+}
+.hoja h3 {
+  margin: 1.4rem 0 .4rem;
+  color: var(--rojo-700);
+  font-size: 1.15rem;
+}
+.hoja h3::before { content: "▸ "; color: var(--rojo-500); }
+
+.fuente {
+  margin: 0 0 1rem;
+  font-size: .85rem;
+  color: var(--tinta-suave);
+}
+.fuente a { color: var(--rojo-600); }
+
+p { margin: .5rem 0; }
+ul, ol { margin: .4rem 0 .8rem; padding-left: 1.4rem; }
+li { margin: .25rem 0; }
+
+a { color: var(--rojo-600); }
+
+/* ---------- Código ---------- */
+code {
+  font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+  background: var(--rojo-200);
+  color: var(--rojo-900);
+  padding: .1rem .35rem;
+  border-radius: 4px;
+  font-size: .88em;
+}
+pre {
+  background: var(--codigo-fondo);
+  color: var(--codigo-texto);
+  border-left: 5px solid var(--rojo-500);
+  border-radius: 8px;
+  padding: .9rem 1rem;
+  overflow-x: auto;
+  margin: .8rem 0 1rem;
+  line-height: 1.5;
+}
+pre code {
+  background: none;
+  color: inherit;
+  padding: 0;
+  font-size: .85rem;
+}
+
+/* ---------- Cajas de apoyo ---------- */
+.nota, .ojo, .resumen {
+  border-radius: 8px;
+  padding: .7rem 1rem;
+  margin: 1rem 0;
+  background: var(--rojo-100);
+  border: 1px solid var(--rojo-300);
+}
+.nota { border-left: 6px solid var(--rojo-500); }
+.nota::before {
+  content: "📝 Nota";
+  display: block;
+  font-weight: 700;
+  color: var(--rojo-700);
+  margin-bottom: .2rem;
+}
+.ojo { border-left: 6px solid var(--rojo-800); background: #fbdde2; }
+.ojo::before {
+  content: "⚠️ Ojo";
+  display: block;
+  font-weight: 700;
+  color: var(--rojo-900);
+  margin-bottom: .2rem;
+}
+.resumen {
+  background: var(--rojo-700);
+  border-color: var(--rojo-800);
+  color: #fff;
+}
+.resumen::before {
+  content: "⭐ En una frase";
+  display: block;
+  font-weight: 700;
+  color: var(--rojo-200);
+  margin-bottom: .2rem;
+}
+.resumen code { background: var(--rojo-800); color: #fff; }
+
+/* ---------- Tablas ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: .8rem 0 1rem;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  font-size: .92rem;
+}
+thead th {
+  background: var(--rojo-700);
+  color: #fff;
+  text-align: left;
+  padding: .55rem .75rem;
+}
+tbody td {
+  padding: .5rem .75rem;
+  border-bottom: 1px solid var(--rojo-200);
+  vertical-align: top;
+}
+tbody tr:nth-child(even) { background: var(--rojo-100); }
+
+/* ---------- Pie ---------- */
+.pie {
+  max-width: 1180px;
+  margin: 1rem auto 2rem;
+  padding: 0 1rem;
+  text-align: center;
+  font-size: .85rem;
+  color: var(--tinta-suave);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 860px) {
+  .contenedor { grid-template-columns: 1fr; }
+  .indice { position: static; max-height: none; }
+  .hoja { padding: 1.2rem 1rem 1.2rem 2.6rem; }
+  .hoja::before { left: 1.7rem; }
+  .hoja::after { display: none; }
+}
+
+/* ---------- Impresión ---------- */
+@media print {
+  body { background: #fff; }
+  .indice { display: none; }
+  .contenedor { display: block; margin: 0; }
+  .hoja { break-inside: avoid-page; box-shadow: none; margin-bottom: 1rem; }
+  pre { white-space: pre-wrap; }
+}
