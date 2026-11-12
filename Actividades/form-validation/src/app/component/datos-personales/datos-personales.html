@@ -1,0 +1,71 @@
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card shadow-sm">
+        <div class="card-header">
+          <h5 class="mb-0">Datos personales</h5>
+        </div>
+
+        <div class="card-body">
+          <form [formGroup]="personalForm" novalidate>
+
+            <!-- Nombre -->
+            <div class="mb-3">
+  <label for="nombre" class="form-label">Nombre</label>
+  <input
+    id="nombre"
+    type="text"
+    class="form-control"
+    formControlName="nombre"
+    [class.is-invalid]="esInvalido('nombre')"
+    [class.is-valid]="esValido('nombre')"
+  />
+  <div class="invalid-feedback">{{ error('nombre') }}</div>
+</div>
+
+            <!-- Apellido -->
+            <div class="mb-3">
+              <label for="apellido" class="form-label">Apellido</label>
+              <input
+                id="apellido"
+                type="text"
+                class="form-control"
+                formControlName="apellido"
+              />
+            </div>
+
+            <!-- DNI -->
+            <div class="mb-3">
+              <label for="dni" class="form-label">DNI</label>
+              <input
+                id="dni"
+                type="text"
+                class="form-control"
+                formControlName="dni"
+              />
+            </div>
+
+            <!-- Teléfono -->
+            <div class="mb-3">
+              <label for="tlfn" class="form-label">Teléfono</label>
+              <input
+                id="tlfn"
+                type="tel"
+                class="form-control"
+                formControlName="tlfn"
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="personalForm.invalid"
+            >
+              Enviar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
