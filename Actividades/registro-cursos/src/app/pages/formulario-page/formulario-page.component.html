@@ -1,0 +1,15 @@
+<div class="container my-4" style="max-width: 760px">
+  <h1 class="h3 mb-4">Registro de cursos de programación</h1>
+
+  <form [formGroup]="form" (ngSubmit)="enviar()" novalidate>
+    <app-datos-personales [group]="form.controls.personales" />
+    <app-datos-cuenta [group]="form.controls.cuenta" />
+    <app-preferencias-curso [group]="form.controls.preferencias" />
+
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Registrarme</button>
+
+    <div class="alert alert-success mt-3" [hidden]="!enviado">
+      ¡Registro completado correctamente!
+    </div>
+  </form>
+</div>

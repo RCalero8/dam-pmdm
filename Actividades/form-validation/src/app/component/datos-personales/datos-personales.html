@@ -1,71 +1,111 @@
-<div class="container mt-4">
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-8 col-lg-6">
-      <div class="card shadow-sm">
-        <div class="card-header">
-          <h5 class="mb-0">Datos personales</h5>
-        </div>
+<form class="container my-4" [formGroup]="form" novalidate>
+  <h2>Registro</h2>
 
-        <div class="card-body">
-          <form [formGroup]="personalForm" novalidate>
+  <h4 class="mt-4">Datos personales</h4>
 
-            <!-- Nombre -->
-            <div class="mb-3">
-  <label for="nombre" class="form-label">Nombre</label>
-  <input
-    id="nombre"
-    type="text"
-    class="form-control"
-    formControlName="nombre"
-    [class.is-invalid]="esInvalido('nombre')"
-    [class.is-valid]="esValido('nombre')"
-  />
-  <div class="invalid-feedback">{{ error('nombre') }}</div>
-</div>
-
-            <!-- Apellido -->
-            <div class="mb-3">
-              <label for="apellido" class="form-label">Apellido</label>
-              <input
-                id="apellido"
-                type="text"
-                class="form-control"
-                formControlName="apellido"
-              />
-            </div>
-
-            <!-- DNI -->
-            <div class="mb-3">
-              <label for="dni" class="form-label">DNI</label>
-              <input
-                id="dni"
-                type="text"
-                class="form-control"
-                formControlName="dni"
-              />
-            </div>
-
-            <!-- Teléfono -->
-            <div class="mb-3">
-              <label for="tlfn" class="form-label">Teléfono</label>
-              <input
-                id="tlfn"
-                type="tel"
-                class="form-control"
-                formControlName="tlfn"
-              />
-            </div>
-
-            <button
-              type="submit"
-              class="btn btn-primary"
-              [disabled]="personalForm.invalid"
-            >
-              Enviar
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
+  @let nombre = form.controls.nombre;
+  <div class="mb-3">
+    <label class="form-label" for="nombre">Nombre</label>
+    <input class="form-control" id="nombre" type="text" formControlName="nombre"
+           [class.is-invalid]="nombre.invalid && (nombre.touched || nombre.dirty)">
+    <div class="text-danger small" [hidden]="!((nombre.touched || nombre.dirty) && nombre.errors?.['required'])">El nombre es obligatorio</div>
+    <div class="text-danger small" [hidden]="!((nombre.touched || nombre.dirty) && nombre.errors?.['minlength'])">Mínimo 2 caracteres</div>
+    <div class="text-danger small" [hidden]="!((nombre.touched || nombre.dirty) && nombre.errors?.['maxlength'])">Máximo 30 caracteres</div>
+    <div class="text-danger small" [hidden]="!((nombre.touched || nombre.dirty) && nombre.errors?.['pattern'])">Solo se permiten letras</div>
   </div>
-</div>
+
+  @let apellidos = form.controls.apellidos;
+  <div class="mb-3">
+    <label class="form-label" for="apellidos">Apellidos</label>
+    <input class="form-control" id="apellidos" type="text" formControlName="apellidos"
+           [class.is-invalid]="apellidos.invalid && (apellidos.touched || apellidos.dirty)">
+    <div class="text-danger small" [hidden]="!((apellidos.touched || apellidos.dirty) && apellidos.errors?.['required'])">Los apellidos son obligatorios</div>
+    <div class="text-danger small" [hidden]="!((apellidos.touched || apellidos.dirty) && apellidos.errors?.['minlength'])">Mínimo 2 caracteres</div>
+    <div class="text-danger small" [hidden]="!((apellidos.touched || apellidos.dirty) && apellidos.errors?.['maxlength'])">Máximo 50 caracteres</div>
+    <div class="text-danger small" [hidden]="!((apellidos.touched || apellidos.dirty) && apellidos.errors?.['pattern'])">Solo se permiten letras</div>
+  </div>
+
+  @let dni = form.controls.dni;
+  <div class="mb-3">
+    <label class="form-label" for="dni">DNI/NIE</label>
+    <input class="form-control" id="dni" type="text" formControlName="dni"
+           [class.is-invalid]="dni.invalid && (dni.touched || dni.dirty)">
+    <div class="text-danger small" [hidden]="!((dni.touched || dni.dirty) && dni.errors?.['required'])">El DNI/NIE es obligatorio</div>
+    <div class="text-danger small" [hidden]="!((dni.touched || dni.dirty) && dni.errors?.['pattern'])">Formato no válido</div>
+  </div>
+
+  @let telefono = form.controls.telefono;
+  <div class="mb-3">
+    <label class="form-label" for="telefono">Teléfono móvil</label>
+    <input class="form-control" id="telefono" type="tel" formControlName="telefono"
+           [class.is-invalid]="telefono.invalid && (telefono.touched || telefono.dirty)">
+    <div class="text-danger small" [hidden]="!((telefono.touched || telefono.dirty) && telefono.invalid)">Introduce un móvil español válido</div>
+  </div>
+
+  <h4 class="mt-4">Datos de la cuenta</h4>
+
+  @let usuario = form.controls.usuario;
+  <div class="mb-3">
+    <label class="form-label" for="usuario">Nombre de usuario</label>
+    <input class="form-control" id="usuario" type="text" formControlName="usuario"
+           [class.is-invalid]="usuario.invalid && (usuario.touched || usuario.dirty)">
+    <div class="text-danger small" [hidden]="!((usuario.touched || usuario.dirty) && (usuario.errors?.['required'] || usuario.errors?.['minlength'] || usuario.errors?.['maxlength']))">Entre 4 y 15 caracteres</div>
+    <div class="text-danger small" [hidden]="!((usuario.touched || usuario.dirty) && usuario.errors?.['pattern'])">Debe empezar por letra y no contener espacios ni símbolos</div>
+  </div>
+
+  @let email = form.controls.email;
+  <div class="mb-3">
+    <label class="form-label" for="email">Email</label>
+    <input class="form-control" id="email" type="email" formControlName="email"
+           [class.is-invalid]="email.invalid && (email.touched || email.dirty)">
+    <div class="text-danger small" [hidden]="!((email.touched || email.dirty) && email.errors?.['required'])">El email es obligatorio</div>
+    <div class="text-danger small" [hidden]="!((email.touched || email.dirty) && email.errors?.['email'])">Formato de email no válido</div>
+  </div>
+
+  @let password = form.controls.password;
+  <div class="mb-3">
+    <label class="form-label" for="password">Contraseña</label>
+    <input class="form-control" id="password" type="password" formControlName="password"
+           [class.is-invalid]="password.invalid && (password.touched || password.dirty)">
+    <div class="text-danger small" [hidden]="!((password.touched || password.dirty) && password.errors?.['required'])">La contraseña es obligatoria</div>
+    <div class="text-danger small" [hidden]="!((password.touched || password.dirty) && password.errors?.['minlength'])">Mínimo 8 caracteres</div>
+    <div class="text-danger small" [hidden]="!((password.touched || password.dirty) && password.errors?.['maxlength'])">Máximo 20 caracteres</div>
+    <div class="text-danger small" [hidden]="!((password.touched || password.dirty) && password.errors?.['pattern']?.requiredPattern === pMay)">Debe incluir una mayúscula</div>
+    <div class="text-danger small" [hidden]="!((password.touched || password.dirty) && password.errors?.['pattern']?.requiredPattern === pMin)">Debe incluir una minúscula</div>
+    <div class="text-danger small" [hidden]="!((password.touched || password.dirty) && password.errors?.['pattern']?.requiredPattern === pNum)">Debe incluir un número</div>
+    <div class="text-danger small" [hidden]="!((password.touched || password.dirty) && password.errors?.['pattern']?.requiredPattern === pEsp)">Debe incluir un carácter especial</div>
+  </div>
+
+  <h4 class="mt-4">Preferencias del curso</h4>
+
+  @let curso = form.controls.curso;
+  <div class="mb-3">
+    <label class="form-label" for="curso">Curso de interés</label>
+    <select class="form-select" id="curso" formControlName="curso"
+            [class.is-invalid]="curso.invalid && (curso.touched || curso.dirty)">
+      <option value="">-- Selecciona --</option>
+      @for (c of cursos; track c) {
+        <option [value]="c">{{ c }}</option>
+      }
+    </select>
+    <div class="text-danger small" [hidden]="!((curso.touched || curso.dirty) && curso.errors?.['required'])">Selecciona un curso</div>
+  </div>
+
+  @let horas = form.controls.horas;
+  <div class="mb-3">
+    <label class="form-label" for="horas">Horas disponibles a la semana</label>
+    <input class="form-control" id="horas" type="number" formControlName="horas"
+           [class.is-invalid]="horas.invalid && (horas.touched || horas.dirty)">
+    <div class="text-danger small" [hidden]="!((horas.touched || horas.dirty) && horas.invalid)">Entre 2 y 40 horas</div>
+  </div>
+
+  @let cp = form.controls.cp;
+  <div class="mb-3">
+    <label class="form-label" for="cp">Código postal</label>
+    <input class="form-control" id="cp" type="text" formControlName="cp"
+           [class.is-invalid]="cp.invalid && (cp.touched || cp.dirty)">
+    <div class="text-danger small" [hidden]="!((cp.touched || cp.dirty) && cp.invalid)">Código postal no válido</div>
+  </div>
+
+  <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Registrarme</button>
+</form>

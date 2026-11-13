@@ -1,0 +1,32 @@
+<fieldset class="card card-body mb-4" [formGroup]="group">
+  <legend class="h5">Preferencias del curso</legend>
+  <div class="row g-3">
+
+    <div class="col-md-5">
+      <label class="form-label" for="curso">Curso de interés</label>
+      <select id="curso" class="form-select"
+              formControlName="curso" [class.is-invalid]="invalido('curso')">
+        <option value="" disabled>-- Selecciona --</option>
+        @for (c of cursos; track c) {
+          <option [value]="c">{{ c }}</option>
+        }
+      </select>
+      <app-campo-errores [control]="group.get('curso')" [mensajes]="msgCurso" />
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label" for="horas">Horas a la semana</label>
+      <input id="horas" type="number" class="form-control"
+             formControlName="horas" [class.is-invalid]="invalido('horas')">
+      <app-campo-errores [control]="group.get('horas')" [mensajes]="msgHoras" />
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label" for="cp">Código postal</label>
+      <input id="cp" type="text" class="form-control" maxlength="5"
+             formControlName="cp" [class.is-invalid]="invalido('cp')">
+      <app-campo-errores [control]="group.get('cp')" [mensajes]="msgCp" />
+    </div>
+
+  </div>
+</fieldset>
