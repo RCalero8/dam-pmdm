@@ -1,0 +1,206 @@
+<form class="container my-4" [formGroup]="form" novalidate>
+  <h2>Registro de mascota</h2>
+
+  <h4 class="mt-4">Datos del propietario</h4>
+
+  <div class="mb-3">
+    <label class="form-label" for="nombre">Nombre</label>
+    <input class="form-control" id="nombre" type="text" formControlName="nombre"
+           [class.is-invalid]="form.controls.nombre.invalid && form.controls.nombre.touched">
+    @if (form.controls.nombre.touched) {
+      @if (form.controls.nombre.errors?.['required']) {
+        <div class="text-danger small">El nombre es obligatorio</div>
+      } @else if (form.controls.nombre.errors?.['minlength']) {
+        <div class="text-danger small">Mínimo 2 caracteres</div>
+      } @else if (form.controls.nombre.errors?.['maxlength']) {
+        <div class="text-danger small">Máximo 30 caracteres</div>
+      } @else if (form.controls.nombre.errors?.['pattern']) {
+        <div class="text-danger small">Solo se permiten letras</div>
+      }
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="apellidos">Apellidos</label>
+    <input class="form-control" id="apellidos" type="text" formControlName="apellidos"
+           [class.is-invalid]="form.controls.apellidos.invalid && form.controls.apellidos.touched">
+    @if (form.controls.apellidos.touched) {
+      @if (form.controls.apellidos.errors?.['required']) {
+        <div class="text-danger small">Los apellidos son obligatorios</div>
+      } @else if (form.controls.apellidos.errors?.['minlength']) {
+        <div class="text-danger small">Mínimo 2 caracteres</div>
+      } @else if (form.controls.apellidos.errors?.['maxlength']) {
+        <div class="text-danger small">Máximo 50 caracteres</div>
+      } @else if (form.controls.apellidos.errors?.['pattern']) {
+        <div class="text-danger small">Solo se permiten letras</div>
+      }
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="telefono">Teléfono de contacto</label>
+    <input class="form-control" id="telefono" type="tel" formControlName="telefono"
+           [class.is-invalid]="form.controls.telefono.invalid && form.controls.telefono.touched">
+    @if (form.controls.telefono.touched) {
+      @if (form.controls.telefono.errors?.['required']) {
+        <div class="text-danger small">El teléfono es obligatorio</div>
+      } @else if (form.controls.telefono.errors?.['pattern']) {
+        <div class="text-danger small">Introduce un teléfono español válido</div>
+      }
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="email">Email</label>
+    <input class="form-control" id="email" type="email" formControlName="email"
+           [class.is-invalid]="form.controls.email.invalid && form.controls.email.touched">
+    @if (form.controls.email.touched) {
+      @if (form.controls.email.errors?.['required']) {
+        <div class="text-danger small">El email es obligatorio</div>
+      } @else if (form.controls.email.errors?.['email']) {
+        <div class="text-danger small">Formato de email no válido</div>
+      }
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="password">Contraseña</label>
+    <input class="form-control" id="password" type="password" formControlName="password"
+           [class.is-invalid]="form.controls.password.invalid && form.controls.password.touched">
+    @if (form.controls.password.touched) {
+      @if (form.controls.password.errors?.['required']) {
+        <div class="text-danger small">La contraseña es obligatoria</div>
+      } @else if (form.controls.password.errors?.['minlength']) {
+        <div class="text-danger small">Mínimo 10 caracteres</div>
+      } @else if (form.controls.password.errors?.['maxlength']) {
+        <div class="text-danger small">Máximo 24 caracteres</div>
+      } @else if(form.controls.password.errors?.['pattern']){
+        <div class="text-danger small"> Al menos una mayúscula, una minúscula y un número, sin espacios.</div>
+      }
+      
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="mascota">Nombre de la mascota</label>
+    <input class="form-control" id="mascota" type="text" formControlName="mascota"
+           [class.is-invalid]="form.controls.mascota.invalid && form.controls.mascota.touched">
+    @if (form.controls.mascota.touched) {
+      @if (form.controls.mascota.errors?.['required']) {
+        <div class="text-danger small">El nombre de la mascota es obligatorio</div>
+      } @else if (form.controls.mascota.errors?.['minlength'] || form.controls.mascota.errors?.['maxlength']) {
+        <div class="text-danger small">Entre 2 y 20 caracteres</div>
+      } @else if (form.controls.mascota.errors?.['pattern']) {
+        <div class="text-danger small">Solo letras, espacios y guiones</div>
+      }
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="especie">Especie</label>
+    <select class="form-select" id="especie" formControlName="especie"
+            [class.is-invalid]="form.controls.especie.invalid && form.controls.especie.touched">
+      <option value="">-- Selecciona --</option>
+      @for (e of especie; track e) {
+        <option [value]="e">{{ e }}</option>
+      }
+    </select>
+    @if (form.controls.especie.touched && form.controls.especie.invalid) {
+      <div class="text-danger small">Selecciona una especie</div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label d-block">Sexo</label>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" id="macho" type="radio" value="Macho" formControlName="sexo"
+             [class.is-invalid]="form.controls.sexo.invalid && form.controls.sexo.touched">
+      <label class="form-check-label" for="macho">Macho</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" id="hembra" type="radio" value="Hembra" formControlName="sexo"
+             [class.is-invalid]="form.controls.sexo.invalid && form.controls.sexo.touched">
+      <label class="form-check-label" for="hembra">Hembra</label>
+    </div>
+    @if (form.controls.sexo.touched && form.controls.sexo.invalid) {
+      <div class="text-danger small">Indica el sexo de la mascota</div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="raza">Raza (opcional)</label>
+    <input class="form-control" id="raza" type="text" formControlName="raza"
+           [class.is-invalid]="form.controls.raza.invalid && form.controls.raza.touched">
+    @if (form.controls.raza.touched && form.controls.raza.errors?.['maxlength']) {
+      <div class="text-danger small">Máximo 40 caracteres</div>
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="edad">Edad en años</label>
+    <input class="form-control" id="edad" type="number" formControlName="edad"
+           [class.is-invalid]="form.controls.edad.invalid && form.controls.edad.touched">
+    @if (form.controls.edad.touched) {
+      @if (form.controls.edad.errors?.['required']) {
+        <div class="text-danger small">La edad es obligatoria</div>
+      } @else if (form.controls.edad.errors?.['min'] || form.controls.edad.errors?.['max']) {
+        <div class="text-danger small">La edad debe estar entre 0 y 30 años</div>
+      }
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="peso">Peso en kg</label>
+    <input class="form-control" id="peso" type="number" step="0.1" formControlName="peso"
+           [class.is-invalid]="form.controls.peso.invalid && form.controls.peso.touched">
+    @if (form.controls.peso.touched) {
+      @if (form.controls.peso.errors?.['required']) {
+        <div class="text-danger small">El peso es obligatorio</div>
+      } @else if (form.controls.peso.errors?.['min'] || form.controls.peso.errors?.['max']) {
+        <div class="text-danger small">El peso debe estar entre 0,1 y 90 kg</div>
+      }
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="microchip">Número de microchip</label>
+    <input class="form-control" id="microchip" type="text" formControlName="microchip"
+           [class.is-invalid]="form.controls.microchip.invalid && form.controls.microchip.touched">
+    @if (form.controls.microchip.touched) {
+      @if (form.controls.microchip.errors?.['required']) {
+        <div class="text-danger small">El microchip es obligatorio</div>
+      } @else if (form.controls.microchip.errors?.['pattern']) {
+        <div class="text-danger small">El microchip debe tener exactamente 15 dígitos numéricos</div>
+      }
+    }
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label" for="motivo">Motivo de la primera visita</label>
+    <textarea class="form-control" id="motivo" rows="4" formControlName="motivo"
+              [class.is-invalid]="form.controls.primeraVisita.invalid && form.controls.primeraVisita.touched"></textarea>
+    @if (form.controls.primeraVisita.touched) {
+      @if (form.controls.primeraVisita.errors?.['required']) {
+        <div class="text-danger small">Describe el motivo de la visita</div>
+      } @else if (form.controls.primeraVisita.errors?.['minlength'] || form.controls.primeraVisita.errors?.['maxlength']) {
+        <div class="text-danger small">Entre 10 y 300 caracteres</div>
+      }
+    }
+  </div>
+
+  <div class="mb-3 form-check">
+    <input class="form-check-input" id="privacidad" type="checkbox" formControlName="privacidad"
+           [class.is-invalid]="form.controls.politicaPrivacidad.invalid && form.controls.politicaPrivacidad.touched">
+    <label class="form-check-label" for="privacidad">Acepto la política de privacidad</label>
+    @if (form.controls.politicaPrivacidad.touched && form.controls.politicaPrivacidad.invalid) {
+      <div class="text-danger small">Debes aceptar la política de privacidad</div>
+    }
+  </div>
+
+  <div class="mb-3 form-check">
+    <input class="form-check-input" id="recordatorios" type="checkbox" formControlName="recordatorios">
+    <label class="form-check-label" for="recordatorios">Quiero recibir recordatorios de vacunas por email</label>
+  </div>
+
+  <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Registrar</button>
+</form>

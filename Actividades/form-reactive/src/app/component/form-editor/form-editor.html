@@ -1,0 +1,96 @@
+<div class="container py-5" style="max-width: 720px;">
+  <div class="card shadow-sm border-0">
+
+    <div class="card-header bg-primary text-white py-3">
+      <h4 class="mb-0">Nueva publicación</h4>
+    </div>
+
+    <form class="card-body p-4" (submit)="onSubmit($event)">
+
+      <!-- Título -->
+      <div class="form-floating mb-3">
+        <input type="text" id="title" class="form-control" placeholder="Título" [formControl]="title" />
+        <label for="title">Título</label>
+      </div>
+
+      <!-- Descripción -->
+      <div class="form-floating mb-3">
+        <textarea id="description" class="form-control" placeholder="Descripción"
+                  style="height: 110px" [formControl]="description"></textarea>
+        <label for="description">Descripción</label>
+      </div>
+
+      <!-- Categoría y etiquetas en dos columnas -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <div class="form-floating">
+            <select id="category" class="form-select" [formControl]="category">
+              <option value="" disabled>Selecciona una categoría</option>
+              <option value="tecnol">Tecnología</option>
+              <option value="dsñ">Diseño</option>
+              <option value="prog">Programación</option>
+              <option value="nov">Novedades</option>
+            </select>
+            <label for="category">Categoría</label>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="form-floating">
+            <input type="text" id="tags" class="form-control" placeholder="Etiquetas" [formControl]="tags" />
+            <label for="tags">Etiquetas</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="input-group mb-4">
+        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+        <div class="form-floating">
+          <input type="email" id="email" class="form-control" placeholder="Email del autor" [formControl]="email" />
+          <label for="email">Email del autor</label>
+        </div>
+      </div>
+
+      <hr />
+
+      <!-- Publicación -->
+      <h6 class="text-uppercase text-muted mb-3">Publicación</h6>
+
+      <div class="btn-group w-100 mb-3" role="group">
+        <input type="radio" class="btn-check" name="modo" id="now"
+               [formControl]="publishNow" [value]="true" />
+        <label class="btn btn-outline-primary" for="now">Publicar ahora</label>
+
+        <input type="radio" class="btn-check" name="modo" id="schedule"
+               [formControl]="publishNow" [value]="false" />
+        <label class="btn btn-outline-primary" for="schedule">Programar fecha</label>
+      </div>
+
+      @if (!publishNow.value) {
+        <div class="mb-3">
+          <div class="input-group">
+            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+            <input
+              class="form-control"
+              [class.is-invalid]="publishDate.invalid && publishDate.touched"
+              placeholder="aaaa-mm-dd"
+              ngbDatepicker
+              #d="ngbDatepicker"
+              [minDate]="hoy"
+              [formControl]="publishDate"
+              (click)="d.toggle()"
+            />
+            <div class="invalid-feedback">Selecciona una fecha.</div>
+          </div>
+        </div>
+      }
+
+      <!-- Botón -->
+      <div class="d-grid mt-4">
+        <button class="btn btn-primary btn-lg" type="submit">Guardar publicación</button>
+      </div>
+
+    </form>
+  </div>
+</div>
