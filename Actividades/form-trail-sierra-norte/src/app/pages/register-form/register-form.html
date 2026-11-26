@@ -1,0 +1,133 @@
+<main class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <header class="mb-4">
+                <h1 class="h2 fw-bold">Inscripción — Trail Sierra Norte</h1>
+                <p class="text-body-secondary">Completa tus datos para formalizar tu dorsal.</p>
+            </header>
+
+            <!-- TODO: Vincular [formGroup] y el evento (ngSubmit) -->
+            <form novalidate [formGroup]="form">
+                <!-- ==================== BLOQUE 1: DATOS PERSONALES ==================== -->
+                <!-- TODO: Vincular formGroupName="datosPersonales" -->
+                <fieldset class="border rounded-3 p-4 mb-4 bg-body-tertiary" formGroupName="datosPersonales">
+                    <legend class="float-none w-auto px-2 fs-5 fw-semibold">
+                        1. Datos del corredor
+                    </legend>
+
+                    <div class="mb-3">
+                        <label for="nombre" class="form-label">Nombre completo *</label>
+                        <input id="nombre" type="text" class="form-control" placeholder="Ej. Laura García" formControlName="nombre"/>
+                        <!-- TODO: Mostrar mensajes de error (ej. <div class="text-danger small mt-1">) -->
+                             
+      
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email *</label>
+                        <input id="email" type="email" class="form-control" placeholder="laura@ejemplo.com" formControlName="email"/>
+                        <!-- TODO: Mostrar mensajes de error -->
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="telefono" class="form-label">Teléfono de contacto *</label>
+                        <input id="telefono" type="tel" class="form-control" placeholder="+34 612345678"  formControlName="tel"/>
+                        <!-- TODO: Mostrar mensajes de error -->
+                    </div>
+
+                    <div class="mb-1">
+                        <label for="password" class="form-label">Contraseña de acceso *</label>
+                        <input id="password" type="password" class="form-control" placeholder="Mínimo 8 caracteres" formControlName="password" />
+                        <!-- TODO: Mostrar mensajes de error -->
+                    </div>
+                </fieldset>
+
+                <!-- ==================== BLOQUE 2: DATOS DE LA CARRERA ==================== -->
+                <!-- TODO: Vincular formGroupName="datosCarrera" -->
+                <fieldset class="border rounded-3 p-4 mb-4 bg-body-tertiary" formGroupName="datosCarrera">
+                    <legend class="float-none w-auto px-2 fs-5 fw-semibold">
+                        2. Datos de la carrera
+                    </legend>
+
+                    <div class="mb-3">
+                        <label for="modalidad" class="form-label">Modalidad *</label>
+                        <select id="modalidad" class="form-select" formControlName="modalidad">
+                            <option value="10k">10K Iniciación</option>
+                            <option value="21k">21K Media Maratón</option>
+                            <option value="42k">42K Maratón Alpino</option>
+                        </select>
+                        <!-- TODO: Mostrar mensajes de error -->
+                    </div>
+
+                    <div class="mb-3">
+                        <span class="form-label d-block">Categoría *</span>
+                        <div class="form-check form-check-inline" formControlName="categoria">
+                            <input id="catMasculino" type="radio" class="form-check-input" name="categoria"
+                                value="masculino" />
+                            <label for="catMasculino" class="form-check-label">Masculino</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input id="catFemenino" type="radio" class="form-check-input" name="categoria"
+                                value="femenino" />
+                            <label for="catFemenino" class="form-check-label">Femenino</label>
+                        </div>
+                        <!-- TODO: Mostrar mensajes de error -->
+                    </div>
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <label for="edad" class="form-label">Edad *</label>
+                            <input id="edad" type="number" class="form-control" placeholder="18 - 85" formControlName="edad" />
+                            <!-- TODO: Mostrar mensajes de error -->
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="codigoFederado" class="form-label">Código de federado *</label>
+                            <input id="codigoFederado" type="text" class="form-control" placeholder="FED-1234" formControlName="codigo"/>
+                            <!-- TODO: Mostrar mensajes de error -->
+                        </div>
+                    </div>
+
+                    <div class="mb-1">
+                        <label for="observaciones" class="form-label">
+                            Alergias u observaciones médicas (opcional)
+                        </label>
+                        <textarea id="observaciones" class="form-control" rows="3"
+                            placeholder="Indica si tienes alguna alergia o condición relevante..."  formControlName="alergia"></textarea>
+                        <!-- TODO: Mostrar mensajes de error -->
+                    </div>
+                </fieldset>
+
+                <!-- ==================== BLOQUE 3: CONDICIONES ==================== -->
+                <!-- TODO: Vincular formGroupName="condiciones" -->
+                <fieldset class="border rounded-3 p-4 mb-4 bg-body-tertiary" formGroupName="condiciones">
+                    <legend class="float-none w-auto px-2 fs-5 fw-semibold">
+                        3. Condiciones y comunicaciones
+                    </legend>
+
+                    <div class="form-check mb-2">
+                        <input id="aceptoReglamento" type="checkbox" class="form-check-input" />
+                        <label for="aceptoReglamento" class="form-check-label" formControlName="acepto">
+                            Acepto el reglamento de la carrera *
+                        </label>
+                        <!-- TODO: Mostrar mensajes de error -->
+                    </div>
+
+                    <div class="form-check">
+                        <input id="recibirTrack" type="checkbox" class="form-check-input"  formControlName="gps"/>
+                        <label for="recibirTrack" class="form-check-label">
+                            Quiero recibir el track GPS de la ruta por email
+                        </label>
+                    </div>
+                </fieldset>
+
+                <!-- TODO: Deshabilitar el botón mientras el formulario no sea válido -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        Inscribirse
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
