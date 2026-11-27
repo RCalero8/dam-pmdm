@@ -22,6 +22,7 @@
     "@angular/ssr": "^22.2.2",
     "@ng-bootstrap/ng-bootstrap": "^21.0.0",
     "@popperjs/core": "^2.11.8",
+    "@swimlane/ngx-charts": "^25.0.4",
     "bootstrap": "^5.3.8",
     "express": "^5.1.0",
     "rxjs": "~7.8.0",

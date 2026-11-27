@@ -1,0 +1,17 @@
+<div class="container my-4">
+  <h2 class="text-center mb-3">⭐ Nota media de las películas populares</h2>
+
+  <div style="height: 450px;">
+    <ngx-charts-bar-vertical
+      [results]="datos()"
+      [xAxis]="true"
+      [yAxis]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      xAxisLabel="Película"
+      yAxisLabel="Nota"
+      [showDataLabel]="true"
+      [legend]="false">
+    </ngx-charts-bar-vertical>
+  </div>
+</div>

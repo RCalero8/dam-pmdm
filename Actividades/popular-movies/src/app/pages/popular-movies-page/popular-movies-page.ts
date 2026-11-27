@@ -1,10 +1,11 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MoviesService } from '../../services/movies.service';
 import { Movie } from '../../models/popular-movies.interface';
+import { GraficaComponent } from '../../components/grafica-component/grafica-component';
 
 @Component({
   selector: 'app-popular-movies-page',
-  imports: [],
+  imports: [GraficaComponent],
   templateUrl: './popular-movies-page.html',
   styleUrl: './popular-movies-page.css'
 })
